@@ -2,57 +2,78 @@ body{
   color: lightblue !important ;
   background-color: aliceblue !important; 
 }
-
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+*{
+  font-family: 'Pretendard-Regular';
+}
 
 
 .todo-item{
-  border: 1px solid lightblue;
+  border: 1px solid #11329e;
   background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom:7px;
+  border-radius: 10px;
 }
 .todo-content{
-  padding:1em
+  padding:1em;
+  color: #11329e;
+  font-weight: bold;
+
 }
 .add-item-row{
   margin-top:50px !important;
   margin-bottom: 30px;
 }
+.title{
+  color: #11329e;
+}
 .input-box{
   padding: 10px;
   width:100%;
-  border: 1px solid lightblue;
-  
-  
+  border: 1px solid #11329e;
+  border-radius: 10px;
+  font-size: 14px;
 }
 .input-box:focus{
   outline: none;
+
 }
 .button-add{
   height: 40px;
   width: 100%;
   border: none;
-  background-color: lightblue;
+  background-color: #11329e;
   color: white;
+  border-radius: 10px;
 }
 .button-add:hover{
   background-color: white;
-  color: lightblue;
-  border: 2px solid lightblue;
+  color: #11329e;
+  border: 2px solid #11329e;
 }
 .button-delete{
   background-color: white;
-  border: 2px solid lightblue;
-  color: lightblue;
+  border: 1px solid #11329e;
+  color: #11329e;
   margin: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 4px 10px;
 }
 .button-delete:hover{
-  background-color: lightblue;
+  background-color: #11329e;
   color: #ffffff;
 }
 
 .item-complete{
-  background-color: gainsboro;
+  background-color: #11329e;
   color:white;
 }
