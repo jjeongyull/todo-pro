@@ -1,88 +1,47 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import TodoBoard from "./components/TodoBoard";
-
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
-import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import TodoPage from "./pages/TodoPage";
+import RegisterPage from "./pages/RegisterPage";
+import { useEffect, useState } from 'react';
+import PrivateRoute from './route/PrivateRoute';
 import api from "./utils/api";
 
 function App() {
-  const [todoList, setTodoList] = useState([]);
-  const [todoValue, setTodoValue] = useState('');
+  const [user, setUser] = useState(null);
 
-  const getTasks = async () => {
-    const response = await api.get('/tasks');
-    // console.log(response);
-    setTodoList(response.data.data);
+  const getUser = async () => { // 토큰을 통해 유저정보를 가져온다
+    try{
+      const storedToken = sessionStorage.getItem('token');
+      if(storedToken){
+        const reponse = await api.get('/user/me');
+        setUser(reponse.data.user)
+      }
+    }catch(e){
+      setUser(null);
+    }
   }
 
   useEffect(() => {
-    getTasks();
+    getUser();
   }, []);
 
-  // 클릭 시
-  const addTask = async () => {
-    try{
-      const response = await api.post('/tasks', {task: todoValue, isComplete: false});
-      if(response.status === 200){
-        setTodoValue('');
-        getTasks();
-      }else{
-        throw new Error('할 일 추가 실패')
-      }
-    }catch(e){
-      console.log(e)
-    }
-  }
-
-  const toggleComplete = async (id) => {
-    try {
-      const task = todoList.find((item) => item._id === id);
-      const response = await api.put(`/tasks/${id}`, {
-        isComplete: !task.isComplete,
-      });
-      if (response.status === 200) {
-        getTasks();
-      }
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
-  const deleteItem = async (id) => {
-    try {
-      console.log(id);
-      const response = await api.delete(`/tasks/${id}`);
-      if (response.status === 200) {
-        getTasks();
-      }
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
   return (
-    <Container>
-      <Row className="add-item-row">
-        <Col xs={12} sm={10}>
-          <input
-            type="text"
-            placeholder="할일을 입력하세요"
-            className="input-box"
-            value={todoValue}
-            onChange={(e) => setTodoValue(e.target.value)}
-          />
-        </Col>
-        <Col xs={12} sm={2}>
-          <button className="button-add" onClick={addTask}>추가</button>
-        </Col>
-      </Row>
+    <Routes>
 
-      <TodoBoard todoList={todoList} toggleComplete={toggleComplete} deleteItem={deleteItem}/>
-    </Container>
+      <Route path="/" 
+      element={
+        <PrivateRoute user={user}>
+          <TodoPage />
+        </PrivateRoute>
+      } />
+      <Route path="/register" element={<RegisterPage />} />
+
+      <Route path="/login" element={<LoginPage setUser={setUser} user={user}/>} />
+    </Routes>
+
   );
 }
 
