@@ -28,8 +28,9 @@ const LoginPage = ({setUser, user}) => {
     }
   }
   if(user){
-    <Navigate to='/'/>
+    return <Navigate to='/'/>
   }
+  
   return (
     <div className="display-center">
       {err && <div className="red-err">{err}</div>}

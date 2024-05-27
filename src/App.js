@@ -15,7 +15,7 @@ function App() {
   const getUser = async () => { // 토큰을 통해 유저정보를 가져온다
     try{
       const storedToken = sessionStorage.getItem('token');
-      if(storedToken){
+      if (storedToken) {
         const reponse = await api.get('/user/me');
         setUser(reponse.data.user)
       }
@@ -30,7 +30,6 @@ function App() {
 
   return (
     <Routes>
-
       <Route path="/" 
       element={
         <PrivateRoute user={user}>
@@ -41,7 +40,6 @@ function App() {
 
       <Route path="/login" element={<LoginPage setUser={setUser} user={user}/>} />
     </Routes>
-
   );
 }
 
