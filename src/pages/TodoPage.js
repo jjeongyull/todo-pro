@@ -34,7 +34,7 @@ const TodoPage = () => {
 
   const btnLogOut = () => {
     sessionStorage.removeItem("token");
-    navigate('/');
+    navigate('/login');
   }
 
   const deleteItem = async (id) => {
