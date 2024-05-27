@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { useNavigate } from "react-router-dom";
 
-const TodoPage = () => {
+const TodoPage = ({setUser}) => {
   const [todoList, setTodoList] = useState([]);
   const [todoValue, setTodoValue] = useState("");
   const navigate = useNavigate();
@@ -34,6 +34,7 @@ const TodoPage = () => {
 
   const btnLogOut = () => {
     sessionStorage.removeItem("token");
+    setUser(null);
     navigate('/login');
   }
 
