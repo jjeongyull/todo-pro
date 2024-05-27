@@ -4,11 +4,12 @@ import api from "../utils/api";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import { Navigate } from "react-router-dom";
 
 const TodoPage = () => {
   const [todoList, setTodoList] = useState([]);
   const [todoValue, setTodoValue] = useState("");
-
+  const navigate = useNavigate();
   const getTasks = async () => {
     const response = await api.get("/tasks");
     setTodoList(response.data.data);
@@ -30,6 +31,11 @@ const TodoPage = () => {
       console.log("error:", error);
     }
   };
+
+  const btnLogOut = () => {
+    sessionStorage.removeItem("token");
+    navigate('/');
+  }
 
   const deleteItem = async (id) => {
     try {
@@ -72,6 +78,7 @@ const TodoPage = () => {
           <button onClick={addTodo} className="button-add">
             추가
           </button>
+          <button  onClick={btnLogOut} className="button-add">로그아웃</button>
         </Col>
       </Row>
 
